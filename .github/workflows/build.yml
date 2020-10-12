@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    types: [synchronize, opened, reopened]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }} # https://frontside.com/blog/2020-05-26-github-actions-pull_request/#how-does-pull_request-affect-actionscheckout
+      - name: Use Node.js 12
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: "12"
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build
+        run: yarn build
+
+      - name: Run BundleMon
+        run: yarn bundlemon
+        env:
+          BUNDLEMON_PROJECT_ID: ${{ secrets.BUNDLEMON_PROJECT_ID }}
+          BUNDLEMON_PROJECT_APIKEY: ${{ secrets.BUNDLEMON_PROJECT_APIKEY }}
+          BUNDLEMON_GITHUB_TOKEN: ${{ secrets.BUNDLEMON_GITHUB_TOKEN }}
