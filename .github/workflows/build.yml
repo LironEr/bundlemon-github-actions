@@ -24,6 +24,10 @@ jobs:
       - name: Build
         run: yarn build
 
+      - name: override CI_COMMIT_SHA
+        if: github.event_name == 'pull_request'
+        run: echo "::set-env name=CI_COMMIT_SHA::${{ github.event.pull_request.head.sha}}"
+
       - name: Run BundleMon
         run: yarn bundlemon
         env:
