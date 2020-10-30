@@ -11,8 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.sha }} # https://frontside.com/blog/2020-05-26-github-actions-pull_request/#how-does-pull_request-affect-actionscheckout
       - name: Use Node.js 12
         uses: actions/setup-node@v2-beta
         with:
@@ -24,6 +22,7 @@ jobs:
       - name: Build
         run: yarn build
 
+      # https://frontside.com/blog/2020-05-26-github-actions-pull_request/#how-does-pull_request-affect-actionscheckout
       - name: override CI_COMMIT_SHA
         if: github.event_name == 'pull_request'
         run: echo "::set-env name=CI_COMMIT_SHA::${{ github.event.pull_request.head.sha}}"
