@@ -1,5 +1,7 @@
 # BundleMon example
 
+This step by step guide will help you set up [BundleMon](https://github.com/LironEr/bundlemon) with GitHub action
+
 ### Clone repo
 
 For this guide I used this repo: https://github.com/Yog9/SnapShot
@@ -51,6 +53,8 @@ yarn bundlemon --local
 
 <img src="./assets/localAnalyze.png" height="100px" />
 
+> We wont use `--local` flag in CI, this flag just help us check that we found all the files we want to find
+
 ### Ignore hash in file name
 
 Changing app code will cause webpack to generate a new hash for files that have been changed.
@@ -87,7 +91,8 @@ In order for BundleMon to know it's the same file you need to add `<hash>` strin
 In order to save history and get differences from your main branches you will need to create a new project and setup environment variables.
 
 [Create new project](https://bundlemon.now.sh/create-project) and copy the project ID and API key
-[Creating encrypted secrets in GitHub](https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
+
+API key is a secret, see how to [create encrypted secrets in GitHub](https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
 
 ### GitHub action
 
@@ -126,9 +131,11 @@ jobs:
       - name: Run BundleMon
         run: yarn bundlemon
         env:
-          BUNDLEMON_PROJECT_ID: ${{ secrets.BUNDLEMON_PROJECT_ID }}
+          BUNDLEMON_PROJECT_ID: YOUR_PROJECT_ID
           BUNDLEMON_PROJECT_APIKEY: ${{ secrets.BUNDLEMON_PROJECT_APIKEY }}
 ```
+
+> Make sure you have `override CI_COMMIT_SHA` step before `BundleMon` step, more info can be found [here](https://frontside.com/blog/2020-05-26-github-actions-pull_request/#how-does-pull_request-affect-actionscheckout)
 
 ### Add GitHub PR integration
 
@@ -154,7 +161,7 @@ Add output configuration to BundleMon config
 BUNDLEMON_GITHUB_TOKEN: ${{ secrets.BUNDLEMON_GITHUB_TOKEN }}
 ```
 
-When creating your first PR with BundleMon you should see all the files found by BundleMon as "Added", because there isn't a record on your main branch.
+When creating your first PR with BundleMon you should see all files found by BundleMon as "Added", because there isn't a record on your main branch.
 
 <img src="./assets/pr-comment.png" height="200px" />
 <br />
