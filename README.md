@@ -159,7 +159,7 @@ Add output configuration to BundleMon config
 BUNDLEMON_GITHUB_TOKEN: ${{ secrets.BUNDLEMON_GITHUB_TOKEN }}
 ```
 
-When creating your first PR with BundleMon you should see all files found by BundleMon as "Added", because there isn't a record on your main branch.
+When creating your [first PR](https://github.com/LironEr/bundlemon-github-actions/pull/1) with BundleMon you should see all files found by BundleMon as "Added", because there isn't a record on your main branch.
 
 <img src="./assets/pr-comment.png" height="200px" />
 <br />
