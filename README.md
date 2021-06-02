@@ -46,12 +46,10 @@ Create a file new file `.bundlemonrc.json`
 ### Run BundleMon
 
 ```
-yarn bundlemon --local
+yarn bundlemon
 ```
 
 <img src="./assets/localAnalyze.png" height="100px" />
-
-> We wont use `--local` flag in CI, this flag just help us check that we found all the files we want to find
 
 ### Ignore hash in file name
 
@@ -88,9 +86,10 @@ In order for BundleMon to know it's the same file you need to add `<hash>` strin
 
 In order to save history and get differences from your main branches you will need to create a new project and setup environment variables.
 
-[Create new project](https://bundlemon.now.sh/create-project) and copy the project ID and API key
+- [Create new project](https://app.bundlemon.dev/create-project) and copy the project ID and API key
+- Add `BUNDLEMON_PROJECT_ID` & `BUNDLEMON_PROJECT_APIKEY` to pipeline variables
 
-API key is a secret, see how to [create encrypted secrets in GitHub](https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
+> API key is a secret, see how to [create encrypted secrets in GitHub](https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
 
 ### GitHub action
 
@@ -135,28 +134,25 @@ jobs:
 
 > Make sure you have `override CI_COMMIT_SHA` step before `BundleMon` step, more info can be found [here](https://frontside.com/blog/2020-05-26-github-actions-pull_request/#how-does-pull_request-affect-actionscheckout)
 
-### Add GitHub PR integration
+### Add GitHub integration
 
-Add output configuration to BundleMon config
+[Install BundleMon GitHub App](https://github.com/apps/bundlemon) and add output configuration to BundleMon config
 
 ```json
+"reportOutput": ["github"]
+
+// or override default options
+
 "reportOutput": [
   [
-    "github-pr",
+    "github",
     {
-      "statusCheck": true,
+      "checkRun": false,
+      "commitStatus": true,
       "prComment": true
     }
   ]
-],
-```
-
-- [Authorize `BundleMon`](https://bundlemon.now.sh/setup-github) and copy the token
-- Add `BUNDLEMON_GITHUB_TOKEN` to GitHub repo secrets
-- Add the secret to "Run BundleMon" step
-
-```yaml
-BUNDLEMON_GITHUB_TOKEN: ${{ secrets.BUNDLEMON_GITHUB_TOKEN }}
+]
 ```
 
 When creating your [first PR](https://github.com/LironEr/bundlemon-github-actions/pull/1) with BundleMon you should see all files found by BundleMon as "Added", because there isn't a record on your main branch.
