@@ -87,7 +87,8 @@ In order for BundleMon to know it's the same file you need to add `<hash>` strin
 In order to save history and get differences from your main branches you will need to create a new project and setup environment variables.
 
 - [Create new project](https://app.bundlemon.dev/create-project) and copy the project ID and API key
-- Add `BUNDLEMON_PROJECT_ID` & `BUNDLEMON_PROJECT_APIKEY` to pipeline variables
+- Add `BUNDLEMON_PROJECT_ID` to pipeline variables
+- Add `BUNDLEMON_PROJECT_APIKEY` to pipeline variables - **not required for public repos**
 
 > API key is a secret, see how to [create encrypted secrets in GitHub](https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
 
@@ -129,7 +130,7 @@ jobs:
         run: yarn bundlemon
         env:
           BUNDLEMON_PROJECT_ID: YOUR_PROJECT_ID
-          BUNDLEMON_PROJECT_APIKEY: ${{ secrets.BUNDLEMON_PROJECT_APIKEY }}
+          BUNDLEMON_PROJECT_APIKEY: ${{ secrets.BUNDLEMON_PROJECT_APIKEY }} # not required for public repos
 ```
 
 > Make sure you have `override CI_COMMIT_SHA` step before `BundleMon` step, more info can be found [here](https://frontside.com/blog/2020-05-26-github-actions-pull_request/#how-does-pull_request-affect-actionscheckout)
