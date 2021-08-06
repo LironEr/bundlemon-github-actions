@@ -2496,10 +2496,10 @@ bundlemon-utils@^0.3.0:
   dependencies:
     bytes "^3.1.0"
 
-bundlemon@^1.0.0-beta.0:
-  version "1.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/bundlemon/-/bundlemon-1.0.0-beta.0.tgz#1caa5214eb5cd39c540aa56b744480dc0efa7b24"
-  integrity sha512-h9CT3IQUsStsv6SttSTG86TaWxnuSkdcZXt/dv3ddad14BUU+118iNH2HyHJCDRq/CwO9QqrKdpH35DlbTQrmg==
+bundlemon@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/bundlemon/-/bundlemon-1.0.0.tgz#cec7fbb078bf5cfb7598d5a29439c7e7e4eae567"
+  integrity sha512-4Ll4/TAEPKAJbEeyCIpFq4a/vPOGMAdI4MF/2BWTjNvss+N2t7mtXk7tQ1TgcF6XrouM8DCChAj1I5aiEFU1QA==
   dependencies:
     axios "^0.21.1"
     bundlemon-utils "^0.3.0"
