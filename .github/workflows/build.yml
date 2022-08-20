@@ -25,7 +25,5 @@ jobs:
       - name: Run BundleMon
         run: yarn bundlemon
         env:
-          BUNDLEMON_PROJECT_ID: 5f84742be905d50008007960
-          BUNDLEMON_SERVICE_URL: https://bundlemon-api-lironer.vercel.app
           # https://frontside.com/blog/2020-05-26-github-actions-pull_request/#how-does-pull_request-affect-actionscheckout
           CI_COMMIT_SHA: ${{github.event.pull_request.head.sha || github.sha}}
