@@ -102,10 +102,10 @@ In order for BundleMon to know it's the same file you need to add `<hash>` strin
        runs-on: ubuntu-latest
        steps:
          - uses: actions/checkout@v2
-         - name: Use Node.js 12
+         - name: Use Node.js 16
            uses: actions/setup-node@v2-beta
            with:
-             node-version: "12"
+             node-version: "16"
 
          - name: Install dependencies
            run: yarn
