@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 12
+      - name: Use Node.js 16
         uses: actions/setup-node@v2-beta
         with:
-          node-version: "12"
+          node-version: "16"
 
       - name: Install dependencies
         run: yarn
@@ -25,6 +25,5 @@ jobs:
       - name: Run BundleMon
         run: yarn bundlemon
         env:
-          BUNDLEMON_PROJECT_ID: 5f84742be905d50008007960
           # https://frontside.com/blog/2020-05-26-github-actions-pull_request/#how-does-pull_request-affect-actionscheckout
           CI_COMMIT_SHA: ${{github.event.pull_request.head.sha || github.sha}}

@@ -17,7 +17,7 @@ yarn build
 ### Add BundleMon
 
 ```
-yarn add -D bundlemon
+yarn add -D bundlemon@next
 ```
 
 ### Add BundleMon config
@@ -82,58 +82,46 @@ In order for BundleMon to know it's the same file you need to add `<hash>` strin
 
 <img src="./assets/localAnalyze-hash.png" height="100px" />
 
-### Create BundleMon project
-
-In order to save history and get differences from your main branches you will need to create a new project and setup environment variables.
-
-- [Create new project](https://app.bundlemon.dev/create-project) and copy the project ID and API key
-- Add `BUNDLEMON_PROJECT_ID` to pipeline variables
-- Add `BUNDLEMON_PROJECT_APIKEY` to pipeline variables - **not required for public repos**
-
-> API key is a secret, see how to [create encrypted secrets in GitHub](https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
-
 ### GitHub action
 
-Create a new file `.github/workflows/build.yml`
+1. [Install BundleMon GitHub App](https://github.com/apps/bundlemon)
 
-```yaml
-name: Build
+2. Create a new file `.github/workflows/build.yml`
 
-on:
-  push:
-    branches: [main]
-  pull_request:
-    types: [synchronize, opened, reopened]
+   ```yaml
+   name: Build
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 12
-        uses: actions/setup-node@v2-beta
-        with:
-          node-version: "12"
+   on:
+     push:
+       branches: [main]
+     pull_request:
+       types: [synchronize, opened, reopened]
 
-      - name: Install dependencies
-        run: yarn
+   jobs:
+     build:
+       runs-on: ubuntu-latest
+       steps:
+         - uses: actions/checkout@v2
+         - name: Use Node.js 12
+           uses: actions/setup-node@v2-beta
+           with:
+             node-version: "12"
 
-      - name: Build
-        run: yarn build
+         - name: Install dependencies
+           run: yarn
 
-      - name: Run BundleMon
-        run: yarn bundlemon
-        env:
-          BUNDLEMON_PROJECT_ID: YOUR_PROJECT_ID
-          BUNDLEMON_PROJECT_APIKEY: ${{ secrets.BUNDLEMON_PROJECT_APIKEY }} # not required for public repos
-          CI_COMMIT_SHA: ${{github.event.pull_request.head.sha || github.sha}} # important!
-```
+         - name: Build
+           run: yarn build
 
-> Make sure to set `CI_COMMIT_SHA` env var, more info can be found [here](https://frontside.com/blog/2020-05-26-github-actions-pull_request/#how-does-pull_request-affect-actionscheckout)
+         - name: Run BundleMon
+           run: yarn bundlemon
+           env:
+             CI_COMMIT_SHA: ${{github.event.pull_request.head.sha || github.sha}} # important!
+   ```
 
-### Add GitHub integration
+   > Make sure to set `CI_COMMIT_SHA` env var, more info can be found [here](https://frontside.com/blog/2020-05-26-github-actions-pull_request/#how-does-pull_request-affect-actionscheckout)
 
-[Install BundleMon GitHub App](https://github.com/apps/bundlemon) and add output configuration to BundleMon config
+### Add GitHub outputs
 
 ```json
 "reportOutput": ["github"]
