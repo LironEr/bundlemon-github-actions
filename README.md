@@ -17,7 +17,7 @@ yarn build
 ### Add BundleMon
 
 ```
-yarn add -D bundlemon@next
+yarn add -D bundlemon
 ```
 
 ### Add BundleMon config
