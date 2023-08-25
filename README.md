@@ -102,10 +102,10 @@ In order for BundleMon to know it's the same file you need to add `<hash>` strin
        runs-on: ubuntu-latest
        steps:
          - uses: actions/checkout@v2
-         - name: Use Node.js 16
+         - name: Use Node.js 20
            uses: actions/setup-node@v2-beta
            with:
-             node-version: "16"
+             node-version: '20'
 
          - name: Install dependencies
            run: yarn
@@ -113,13 +113,9 @@ In order for BundleMon to know it's the same file you need to add `<hash>` strin
          - name: Build
            run: yarn build
 
-         - name: Run BundleMon
-           run: yarn bundlemon
-           env:
-             CI_COMMIT_SHA: ${{github.event.pull_request.head.sha || github.sha}} # important!
+         - name: BundleMon
+           uses: lironer/bundlemon-action@v1
    ```
-
-   > Make sure to set `CI_COMMIT_SHA` env var, more info can be found [here](https://frontside.com/blog/2020-05-26-github-actions-pull_request/#how-does-pull_request-affect-actionscheckout)
 
 ### Add GitHub outputs
 
